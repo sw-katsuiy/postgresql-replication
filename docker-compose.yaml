@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   primary:
-    image: postgres:13.5
+    image: postgres:11.7
     restart: always
     command: -c 'config_file=/etc/postgresql/postgresql.conf' -c 'hba_file=/etc/postgresql/pg_hba.conf'
     environment:
@@ -22,7 +22,7 @@ services:
       retries: 5
 
   replica:
-    image: postgres:13.5
+    image: postgres:11.7
     restart: always
     entrypoint: /entrypoint.sh
     environment:
