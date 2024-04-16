@@ -1,7 +1,7 @@
-$ docker-compose up
-でprimary, replica, logical-replicaという名前の3つのDBサーバーが立ち上がります。
-primaryとreplicaは自動的に物理レプリケーションの関係です。
-以下の手順で、primaryをpublisher、logical-replicaをsubscriberとする論理レプリケーションが開始できます。
+$ docker-compose up  
+でprimary, replica, logical-replicaという名前の3つのDBサーバーが立ち上がります。  
+primaryとreplicaは自動的に物理レプリケーションの関係です。  
+以下の手順で、primaryをpublisher、logical-replicaをsubscriberとする論理レプリケーションが開始できます。  
 
 primary側
 1. 任意にテーブルを作成(primary_key必須)
