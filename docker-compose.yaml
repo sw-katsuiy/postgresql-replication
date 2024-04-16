@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   primary:
-    image: postgres:13.5
+    image: postgres:11.7
     restart: always
     command: -c 'config_file=/etc/postgresql/postgresql.conf' -c 'hba_file=/etc/postgresql/pg_hba.conf'
     environment:
@@ -22,7 +22,7 @@ services:
       retries: 5
 
   replica:
-    image: postgres:13.5
+    image: postgres:11.7
     restart: always
     entrypoint: /entrypoint.sh
     environment:
@@ -44,3 +44,23 @@ services:
     depends_on:
       primary:
         condition: service_healthy
+
+  logical-replica:
+    image: postgres:11.7
+    restart: always
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    ports:
+      - 35432:5432
+    volumes:
+      - ./logical-replica/data:/var/lib/postgresql/data
+      - ./logical-replica/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ./logical-replica/pg_hba.conf:/etc/postgresql/pg_hba.conf
+    healthcheck:
+      test: pg_isready -d db
+      interval: 1s
+      timeout: 1s
+      retries: 5
+
